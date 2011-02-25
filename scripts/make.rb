@@ -75,6 +75,7 @@ Makefile = <<EOF
 # Written by: Paulo H. "Taka" Torrens <paulo_torrens@hotmail.com> #
 ###################################################################
 
+PROJECT_NAME = project
 CC = avr-gcc $(CPP_FLAGS)
 LD = avr-gcc $(LD_FLAGS)
 AR = avr-ar $(AR_FLAGS)
@@ -99,7 +100,7 @@ FORMAT = ihex
 UPLOAD_RATE = 57600
 MAX_SIZE = 30720
 
-OUTPUT = irmimic
+OUTPUT = $(PROJECT_NAME)
 
 all: $(LIBRARIES) $(OUTPUT).hex
 
