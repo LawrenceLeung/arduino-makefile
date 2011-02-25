@@ -19,6 +19,7 @@
  Modified 23 November 2006 by David A. Mellis
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -40,6 +41,13 @@ void Print::write(const uint8_t *buffer, size_t size)
 {
   while (size--)
     write(*buffer++);
+}
+
+void Print::print(const String &s)
+{
+  for (int i = 0; i < s.length(); i++) {
+    write(s[i]);
+  }
 }
 
 void Print::print(const char str[])
@@ -97,6 +105,12 @@ void Print::println(void)
 {
   print('\r');
   print('\n');  
+}
+
+void Print::println(const String &s)
+{
+  print(s);
+  println();
 }
 
 void Print::println(const char c[])
@@ -204,43 +218,3 @@ void Print::printFloat(double number, uint8_t digits)
     remainder -= toPrint; 
   } 
 }
-
-//--------------------------------------------------
-#include <stdarg.h>
-void Print::printf(const char *str, ...) {
-  va_list args;
-  va_start(args, str);
-  while(uint8_t c = *str++) {
-    switch(c) {
-      case '%': {
-        c = *str++;
-        if(c) {
-          switch(c) {
-            // TODO
-            case 'd': {
-              int x = va_arg(args, int);
-              printNumber(x, 10);
-            } break;
-            case 's': {
-              const char *x = va_arg(args, const char *);
-              print(x);
-            } break;
-            case '%': {
-              write(c);
-            } break;
-            default: {
-              write('%');
-              write(c);
-            };
-          };
-        } else {
-          write('%');
-        };
-      } break;
-      default: {
-        write(c);
-      } break;
-    };
-  };
-  va_end(args);
-};
