@@ -97,7 +97,7 @@ PORT = /dev/ttyUSB$(USB)
 MCU = atmega328p
 F_CPU = 16000000
 FORMAT = ihex
-UPLOAD_RATE = 57600
+UPLOAD_RATE = 19200
 MAX_SIZE = 30720
 
 OUTPUT = $(PROJECT_NAME)
@@ -121,7 +121,7 @@ $(OUTPUT).hex: $(OUTPUT).elf
 
 upload: all
 \tstty -F $(PORT) hupcl
-\t$(AVRDUDE) -p$(MCU) -cstk500v1 -P$(PORT) -b$(UPLOAD_RATE) -D -Uflash:w:$(OUTPUT).hex:i 
+\t$(AVRDUDE) -V -F -p $(MCU) -c stk500v1 -P $(PORT) -b $(UPLOAD_RATE) -D -Uflash:w:$(OUTPUT).hex:i 
 
 clean:
 \t@rm -f $(LIBRARIES) $(OUTPUT).elf $(OUTPUT).hex $(shell find . -follow -name "*.o")
