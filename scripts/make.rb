@@ -1,4 +1,4 @@
-#!/usr/bin/ruby1.9
+#!/usr/bin/env ruby
 # Written by: Paulo H. "Taka" Torrens <paulo_torrens@hotmail.com>
 
 Libs = []
