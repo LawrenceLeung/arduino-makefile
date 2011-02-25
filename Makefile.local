@@ -1,0 +1,6 @@
+#
+# Custom declarations goes here
+#
+
+# MCU=atmega168
+# PORT=/dev/arduino

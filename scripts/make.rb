@@ -104,6 +104,8 @@ OUTPUT = $(PROJECT_NAME)
 
 all: $(LIBRARIES) $(OUTPUT).hex
 
+include Makefile.local
+
 #{Libs.join("\n\n")}
 
 #{Sources.to_s}
