@@ -2,5 +2,10 @@
 # Custom declarations goes here
 #
 
+# TEENSY / Atmega32u4 Breakout+
+# TARGET_BOARD = teensy
+# TEENSY_USB = usb_hid
+# MCU=atmega32u4
+
 # MCU=atmega168
 # PORT=/dev/arduino
