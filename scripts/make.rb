@@ -94,7 +94,7 @@ OBJECTS = #{Sources.objects.join(" ")}
 INCLUDES = -I"/usr/lib/avr/include/avr" -I"./include" #{Headers.join(" ")} -I"lib/$(TARGET_BOARD)"
 DEFINES = -DF_CPU=$(F_CPU)L -DARDUINO=18
 
-TEENY_KEYBOARD_LAYOUT = LAYOUT_US_INTERNATIONAL
+TEENSY_KEYBOARD_LAYOUT = LAYOUT_US_INTERNATIONAL
 TEENSY_FLAGS =
 TEENSY_USB = usb_hid
 CPP_FLAGS = -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MCU) $(DEFINES) $(INCLUDES)
