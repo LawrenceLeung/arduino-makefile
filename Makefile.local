@@ -3,6 +3,7 @@
 #
 
 # TEENSY / Atmega32u4 Breakout+
+# TEENSY_KEYBOARD_LAYOUT = LAYOUT_FRENCH
 # TARGET_BOARD = teensy
 # TEENSY_USB = usb_hid
 # MCU=atmega32u4

@@ -1,0 +1,33 @@
+#
+# Default settings for teensy
+#
+
+TEENSY_KEYBOARD_LAYOUT ?= LAYOUT_US_INTERNATIONAL
+TEENSY_FLAGS ?=
+TEENSY_USB ?= usb_hid
+
+CPP_FLAGS += $(TEENSY_FLAGS) -D$(TEENSY_KEYBOARD_LAYOUT)=1
+LIBRARIES += $(TEENSY_USB).a
+
+# Default port
+PORT = /dev/ttyACM$(USB)
+PROGRAMMER = avr109
+MCU = atmega32u4
+MAX_SIZE = 30720
+
+ifeq ($(TEENSY_USB),usb_serial)
+  CPP_FLAGS += -DUSB_SERIAL
+endif
+ifeq ($(TEENSY_USB),usb_midi)
+  CPP_FLAGS += -DUSB_MIDI
+endif
+ifeq ($(TEENSY_USB),usb_disk)
+  CPP_FLAGS += -DUSB_DISK
+endif
+ifeq ($(TEENSY_USB),usb_hid)
+  CPP_FLAGS += -DUSB_HID
+endif
+
+upload_pre:
+	@echo "Please reset the board"
+	@sleep 2
