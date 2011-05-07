@@ -31,13 +31,30 @@ end
 class Lib < LoL
   attr_accessor :name
   def initialize(name)
+    @dirname = name
     @name = name + ".a"
     @dir = "lib/" + name
-  end
-  def to_s
-    if SupportedTargets.include?(@name)
+    @has_sources = (get_files.length > 0)
+    print "#{@name} (#{@dirname}) has_sources: #{@has_sources}\n"
+
+    if not ignored?
       Headers.push("-I\"#{dir}\"")
       Headers.uniq!
+    end
+
+  end
+
+  def ignored?
+    return (SupportedTargets. + IgnoredLibs).include?(@dirname)
+  end
+
+  def has_sources
+    return @has_sources
+  end
+
+  def to_s
+    if not has_sources
+      return ""
     end
 
     array = get_files
@@ -68,7 +85,10 @@ class Source < LoL
 end
 Dir.foreach("lib") do |dir|
   next if [".", ".."].include?(dir)
-  Libs.push(Lib.new(dir))
+  lib = Lib.new(dir)
+  if lib.has_sources
+    Libs.push(lib)
+  end
 end
 Sources = Source.new
 Sources.to_s
@@ -94,19 +114,19 @@ F_CPU = 16000000
 FORMAT = ihex
 USB=0
 
-LIBRARIES = $(TARGET_BOARD).a #{(Libs.collect { |x| x.name } - (SupportedTargets + IgnoredLibs).collect { |x| x + ".a" }).join(" ")} 
+LIBRARIES = $(TARGET_BOARD).a #{(Libs.collect { |x| x.name if not x.ignored? }).join(" ")}
 OBJECTS = #{Sources.objects.join(" ")}
 INCLUDES = -I"/usr/lib/avr/include/avr" -I"./include" #{Headers.join(" ")} -I"lib/$(TARGET_BOARD)"
 DEFINES = -DF_CPU=$(F_CPU)L -DARDUINO=18
 
-CPP_FLAGS = -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MCU) $(DEFINES) $(INCLUDES)
+CPP_FLAGS = -Wall -std=gnu++0x -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MCU) $(DEFINES) $(INCLUDES)
 LD_FLAGS = -Os -Wl,--gc-sections -mmcu=$(MCU)
 AR_FLAGS = rcs
 
 default: all
 
-include Makefile.local
 include targets/Makefile.$(TARGET_BOARD)
+include Makefile.local
 
 OUTPUT = $(PROJECT_NAME)
 
