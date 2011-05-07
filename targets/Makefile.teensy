@@ -12,10 +12,10 @@ LIBRARIES += $(TEENSY_USB).a
 INCLUDES += -I$(TEENSY_USB)/
 
 # Default port
-PORT = /dev/ttyACM$(USB)
-PROGRAMMER = avr109
-MCU = atmega32u4
-MAX_SIZE = 30720
+PORT ?= /dev/ttyACM$(USB)
+PROGRAMMER ?= avr109
+MCU ?= atmega32u4
+MAX_SIZE ?= 30720
 
 ifeq ($(TEENSY_USB),usb_serial)
   CPP_FLAGS += -DUSB_SERIAL

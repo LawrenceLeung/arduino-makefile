@@ -35,7 +35,6 @@ class Lib < LoL
     @name = name + ".a"
     @dir = "lib/" + name
     @has_sources = (get_files.length > 0)
-    print "#{@name} (#{@dirname}) has_sources: #{@has_sources}\n"
 
     if not ignored?
       Headers.push("-I\"#{dir}\"")
@@ -125,8 +124,8 @@ AR_FLAGS = rcs
 
 default: all
 
-include targets/Makefile.$(TARGET_BOARD)
 include Makefile.local
+include targets/Makefile.$(TARGET_BOARD)
 
 OUTPUT = $(PROJECT_NAME)
 

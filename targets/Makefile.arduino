@@ -2,10 +2,10 @@
 # Arduino's related vars
 #
 
-PORT = /dev/ttyUSB$(USB)
-MCU = atmega328p
-MAX_SIZE = 30720
-PROGRAMMER = stk500v1
+PORT ?= /dev/ttyUSB$(USB)
+MCU ?= atmega328p
+MAX_SIZE ?= 30720
+PROGRAMMER ?= stk500v1
 
 upload_pre:
 	stty -F $(PORT) hupcl
